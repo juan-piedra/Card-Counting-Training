@@ -428,6 +428,47 @@
   }
   .submit-btn:active { transform: scale(0.97); }
 
+  /* ── STEPPER ── */
+  .stepper-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 16px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .stepper-btn {
+    flex: 0 0 64px;
+    height: 64px;
+    background: var(--felt-dark);
+    border: none;
+    color: var(--gold);
+    font-size: 1.8rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.12s;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .stepper-btn:active { background: rgba(201,168,76,0.2); }
+  .stepper-display {
+    flex: 1;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    background: var(--felt-dark);
+    border-left: 1px solid var(--gold-dim);
+    border-right: 1px solid var(--gold-dim);
+    padding: 10px 8px;
+    min-width: 80px;
+    line-height: 1;
+  }
+
   /* Result state */
   .result-banner {
     border-radius: 10px;
@@ -719,8 +760,10 @@
     <div class="modal-sub" id="quiz-sub">What is the running count?</div>
 
     <div id="quiz-input-section">
-      <div class="count-input-wrap">
-        <input type="number" class="count-input" id="count-input" placeholder="0" inputmode="numeric">
+      <div class="stepper-wrap">
+        <button class="stepper-btn" id="stepper-minus">&#8722;</button>
+        <div class="stepper-display" id="stepper-display">0</div>
+        <button class="stepper-btn" id="stepper-plus">+</button>
       </div>
       <button class="submit-btn" id="submit-btn">Submit</button>
     </div>
@@ -939,20 +982,28 @@
     quizCount++;
     document.getElementById('quiz-title').textContent = isFinal ? 'Final Count' : 'Count Check';
     document.getElementById('quiz-sub').textContent = 'What is the running count?';
-    document.getElementById('count-input').value = '';
+    stepperVal = 0;
+    document.getElementById('stepper-display').textContent = '0';
     document.getElementById('quiz-input-section').style.display = '';
     document.getElementById('quiz-result-section').style.display = 'none';
     document.getElementById('quiz-modal').classList.add('open');
-    setTimeout(() => document.getElementById('count-input').focus(), 300);
   }
 
   document.getElementById('submit-btn').addEventListener('click', submitCount);
-  document.getElementById('count-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') submitCount();
+  // Stepper buttons
+  let stepperVal = 0;
+  document.getElementById('stepper-minus').addEventListener('click', () => {
+    stepperVal--;
+    document.getElementById('stepper-display').textContent = stepperVal;
+  });
+  document.getElementById('stepper-plus').addEventListener('click', () => {
+    stepperVal++;
+    document.getElementById('stepper-display').textContent = stepperVal;
   });
 
+
   function submitCount() {
-    const val = document.getElementById('count-input').value.trim();
+    const val = document.getElementById('stepper-display').textContent.trim();
     if (val === '' || isNaN(val)) return;
     const userAnswer = parseInt(val);
     const isCorrect = userAnswer === runningCount;
