@@ -627,6 +627,166 @@
   }
   .toggle-desc strong { color: rgba(255,255,255,0.6); }
 
+
+  /* ── MODE TABS ── */
+  .mode-tabs {
+    display: flex;
+    width: 100%;
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .mode-tab {
+    flex: 1;
+    padding: 13px 8px;
+    background: transparent;
+    border: none;
+    color: var(--gold-dim);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    text-align: center;
+  }
+  .mode-tab.active {
+    background: var(--gold);
+    color: var(--felt-dark);
+  }
+  .mode-tab:not(.active):hover { background: rgba(201,168,76,0.08); color: var(--gold); }
+
+  /* ── AUTO DEAL SETUP ── */
+  .auto-panel { display: none; width: 100%; flex-direction: column; gap: 16px; }
+  .auto-panel.visible { display: flex; }
+
+  .card-count-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .count-adj-btn {
+    width: 44px; height: 44px;
+    background: var(--felt-dark);
+    border: 1px solid var(--gold-dim);
+    border-radius: 8px;
+    color: var(--gold);
+    font-size: 1.4rem;
+    font-family: 'Playfair Display', serif;
+    cursor: pointer;
+    transition: background 0.12s;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .count-adj-btn:active { background: rgba(201,168,76,0.2); }
+  .count-adj-btn.big-step { font-size: 1rem; letter-spacing: -1px; }
+  .count-val-display {
+    flex: 1;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--gold-light);
+    background: var(--felt-dark);
+    border: 1px solid var(--gold-dim);
+    border-radius: 10px;
+    padding: 10px 6px;
+    line-height: 1;
+  }
+
+  .speed-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .speed-btn {
+    background: var(--felt-dark);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-dim);
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    padding: 10px 2px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .speed-btn .sp-name { display: block; font-weight: 700; font-size: 0.72rem; color: var(--gold-dim); }
+  .speed-btn .sp-val  { display: block; font-size: 0.62rem; margin-top: 3px; }
+  .speed-btn.selected, .speed-btn:active {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .speed-btn.selected .sp-name { color: var(--gold); }
+
+  /* ── AUTO DEAL GAME SCREEN ── */
+  #auto-game-screen { gap: 0; height: 100%; justify-content: space-between; padding: 0; }
+
+  .auto-hud {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px 10px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .progress-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 2px;
+    margin: 0 20px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.3s linear;
+    width: 0%;
+  }
+
+  .auto-bottom {
+    width: 100%;
+    padding: 12px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .auto-status {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    height: 16px;
+  }
+  .pause-btn {
+    width: 100%;
+    padding: 16px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .pause-btn:active { background: rgba(201,168,76,0.2); }
+
+  /* ── AUTO RESULTS ── */
+  #auto-results-screen { gap: 16px; }
+
   /* Grade colors */
   .grade-s { color: #f0cc6e; }
   .grade-a { color: #2ecc71; }
@@ -643,6 +803,12 @@
     <div class="logo">Card Counter</div>
     <div class="tagline">Hi-Lo Training</div>
 
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tab-practice">Practice</button>
+      <button class="mode-tab" id="tab-auto">Auto Deal</button>
+    </div>
+
+    <div id="practice-panel" style="width:100%;display:flex;flex-direction:column;gap:0;">
     <div class="gold-border">
       <div class="section-label">Number of Decks</div>
       <div class="deck-grid">
@@ -682,6 +848,43 @@
       </div>
       <div class="toggle-desc" id="hint-desc">Cards will <strong>not</strong> show the +1 / 0 / −1 badge</div>
     </div>
+
+    </div><!-- /practice-panel -->
+
+    <div class="auto-panel" id="auto-panel">
+      <div class="gold-border" style="margin-bottom:0">
+        <div class="section-label">Number of Cards to Deal</div>
+        <div class="card-count-row">
+          <button class="count-adj-btn big-step" id="count-minus10">−10</button>
+          <button class="count-adj-btn" id="count-minus1">−</button>
+          <div class="count-val-display" id="auto-card-count-display">20</div>
+          <button class="count-adj-btn" id="count-plus1">+</button>
+          <button class="count-adj-btn big-step" id="count-plus10">+10</button>
+        </div>
+      </div>
+
+      <div class="gold-border" style="margin-bottom:0">
+        <div class="section-label">Deal Speed</div>
+        <div class="speed-grid">
+          <button class="speed-btn" data-speed="2000"><span class="sp-name">Slow</span><span class="sp-val">2.0s</span></button>
+          <button class="speed-btn selected" data-speed="1700"><span class="sp-name">Medium</span><span class="sp-val">1.7s</span></button>
+          <button class="speed-btn" data-speed="1400"><span class="sp-name">Fast</span><span class="sp-val">1.4s</span></button>
+          <button class="speed-btn" data-speed="1100"><span class="sp-name">Faster</span><span class="sp-val">1.1s</span></button>
+          <button class="speed-btn" data-speed="800"><span class="sp-name">Fastest</span><span class="sp-val">0.8s</span></button>
+        </div>
+      </div>
+
+      <div class="gold-border" style="margin-bottom:0">
+        <div class="section-label">Count Hints on Cards</div>
+        <div class="toggle-row">
+          <span class="toggle-label" id="auto-hint-label">Off</span>
+          <div class="toggle-track" id="auto-hint-toggle" data-on="false">
+            <div class="toggle-thumb"></div>
+          </div>
+        </div>
+        <div class="toggle-desc" id="auto-hint-desc">Cards will <strong>not</strong> show the +1 / 0 / −1 badge</div>
+      </div>
+    </div><!-- /auto-panel -->
 
     <button class="start-btn" id="start-btn">Deal Me In</button>
   </div>
@@ -751,7 +954,64 @@
     <button class="play-again-btn" id="play-again-btn">Play Again</button>
   </div>
 
-</div>
+
+  <!-- ── AUTO DEAL GAME SCREEN ── -->
+  <div id="auto-game-screen" class="screen">
+    <div class="auto-hud">
+      <div class="hud-stat">
+        <div class="hud-val" id="auto-hud-dealt">0</div>
+        <div class="hud-lbl">Dealt</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-val" id="auto-hud-total">—</div>
+        <div class="hud-lbl">Total</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-val" id="auto-hud-speed">—</div>
+        <div class="hud-lbl">Speed</div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="auto-progress-bar"></div>
+    </div>
+
+    <div class="card-stage">
+      <div id="auto-card-display">
+        <div class="card-placeholder"><span>♠</span></div>
+      </div>
+    </div>
+
+    <div class="auto-bottom">
+      <div class="auto-status" id="auto-status">Dealing…</div>
+      <button class="pause-btn" id="pause-btn">⏸ Pause</button>
+      <button class="quit-btn" id="auto-quit-btn">Quit Session</button>
+    </div>
+  </div>
+
+  <!-- ── AUTO DEAL RESULTS SCREEN ── -->
+  <div id="auto-results-screen" class="screen">
+    <div class="results-header">
+      <div class="logo">Auto Deal</div>
+      <div class="tagline">Result</div>
+    </div>
+    <div class="stat-card" id="auto-res-banner">
+      <div class="big-stat" id="auto-res-icon">—</div>
+      <div class="big-stat-lbl" id="auto-res-msg">—</div>
+    </div>
+    <div class="stat-card">
+      <div style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px">Your Answer</div>
+      <div class="big-stat" id="auto-res-user">—</div>
+    </div>
+    <div class="stat-card">
+      <div style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px">Correct Count</div>
+      <div class="big-stat" id="auto-res-correct">—</div>
+    </div>
+    <div class="stat-row" style="gap:12px">
+      <button class="play-again-btn" id="auto-play-again-btn" style="flex:1">Play Again</button>
+    </div>
+  </div>
+
+</div><!-- /#app -->
 
 <!-- ── QUIZ MODAL ── -->
 <div class="modal-overlay" id="quiz-modal">
@@ -895,7 +1155,9 @@
     });
   });
 
-  document.getElementById('start-btn').addEventListener('click', startGame);
+  document.getElementById('start-btn').addEventListener('click', () => {
+    if (autoMode) startAutoGame(); else startGame();
+  });
 
   function startGame() {
     deck = shuffle(buildDeck(numDecks));
@@ -989,7 +1251,7 @@
     document.getElementById('quiz-modal').classList.add('open');
   }
 
-  document.getElementById('submit-btn').addEventListener('click', submitCount);
+  document.getElementById('submit-btn').addEventListener('click', handleSubmit);
   // Stepper buttons
   let stepperVal = 0;
   document.getElementById('stepper-minus').addEventListener('click', () => {
@@ -1085,6 +1347,214 @@
 
   // ── PLAY AGAIN ──
   document.getElementById('play-again-btn').addEventListener('click', () => showScreen('setup-screen'));
+
+  // ══════════════════════════════════════
+  //  AUTO DEAL MODE
+  // ══════════════════════════════════════
+  let autoMode = false;
+  let autoCardCount = 20;
+  let autoSpeedMs = 1700;
+  let autoShowHints = false;
+  let autoRunningCount = 0;
+  let autoDealt = 0;
+  let autoTimer = null;
+  let autoPaused = false;
+  let autoDeck = [];
+
+  // Mode tabs
+  document.getElementById('tab-practice').addEventListener('click', () => {
+    autoMode = false;
+    document.getElementById('tab-practice').classList.add('active');
+    document.getElementById('tab-auto').classList.remove('active');
+    document.getElementById('practice-panel').style.display = 'flex';
+    document.getElementById('practice-panel').style.flexDirection = 'column';
+    document.getElementById('auto-panel').classList.remove('visible');
+    document.getElementById('start-btn').textContent = 'Deal Me In';
+  });
+  document.getElementById('tab-auto').addEventListener('click', () => {
+    autoMode = true;
+    document.getElementById('tab-auto').classList.add('active');
+    document.getElementById('tab-practice').classList.remove('active');
+    document.getElementById('practice-panel').style.display = 'none';
+    document.getElementById('auto-panel').classList.add('visible');
+    document.getElementById('start-btn').textContent = 'Start Auto Deal';
+  });
+
+  // Card count adjuster
+  function clampAutoCount(v) { return Math.min(100, Math.max(1, v)); }
+  function setAutoCount(v) {
+    autoCardCount = clampAutoCount(v);
+    document.getElementById('auto-card-count-display').textContent = autoCardCount;
+  }
+  document.getElementById('count-minus10').addEventListener('click', () => setAutoCount(autoCardCount - 10));
+  document.getElementById('count-minus1').addEventListener('click',  () => setAutoCount(autoCardCount - 1));
+  document.getElementById('count-plus1').addEventListener('click',   () => setAutoCount(autoCardCount + 1));
+  document.getElementById('count-plus10').addEventListener('click',  () => setAutoCount(autoCardCount + 10));
+
+  // Speed selector
+  document.querySelectorAll('.speed-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      autoSpeedMs = parseInt(btn.dataset.speed);
+    });
+  });
+
+  // Auto hint toggle
+  const autoHintToggle = document.getElementById('auto-hint-toggle');
+  autoHintToggle.addEventListener('click', () => {
+    autoShowHints = !autoShowHints;
+    autoHintToggle.dataset.on = autoShowHints;
+    document.getElementById('auto-hint-label').textContent = autoShowHints ? 'On' : 'Off';
+    document.getElementById('auto-hint-label').style.color = autoShowHints ? 'var(--gold)' : 'var(--gold-dim)';
+    document.getElementById('auto-hint-desc').innerHTML = autoShowHints
+      ? 'Cards <strong>will</strong> show the +1 / 0 / −1 badge'
+      : 'Cards will <strong>not</strong> show the +1 / 0 / −1 badge';
+  });
+
+  function renderAutoCard(card) {
+    const isRed = RED_SUITS.includes(card.suit);
+    const colorClass = isRed ? 'red' : 'black';
+    const hv = hiLoValue(card.rank);
+    const hintClass = hv > 0 ? 'plus' : hv < 0 ? 'minus' : 'zero';
+    const hintText = hv > 0 ? '+1' : hv < 0 ? '−1' : '0';
+    return `
+      <div class="playing-card ${colorClass}">
+        <div class="card-corner top">
+          <span class="corner-rank">${card.rank}</span>
+          <span class="corner-suit">${card.suit}</span>
+        </div>
+        <div class="card-center">${card.suit}</div>
+        <div class="card-corner bottom">
+          <span class="corner-rank">${card.rank}</span>
+          <span class="corner-suit">${card.suit}</span>
+        </div>
+        ${autoShowHints ? `<div class="count-hint ${hintClass}">${hintText}</div>` : ''}
+      </div>`;
+  }
+
+  function startAutoGame() {
+    autoDeck = shuffle(buildDeck(numDecks));
+    autoRunningCount = 0;
+    autoDealt = 0;
+    autoPaused = false;
+
+    const speedLabels = {2000:'Slow',1700:'Medium',1400:'Fast',1100:'Faster',800:'Fastest'};
+
+    document.getElementById('auto-hud-total').textContent = autoCardCount;
+    document.getElementById('auto-hud-speed').textContent = speedLabels[autoSpeedMs] || autoSpeedMs + 'ms';
+    document.getElementById('auto-hud-dealt').textContent = '0';
+    document.getElementById('auto-progress-bar').style.width = '0%';
+    document.getElementById('auto-card-display').innerHTML = '<div class="card-placeholder"><span>♠</span></div>';
+    document.getElementById('auto-status').textContent = 'Dealing…';
+    document.getElementById('pause-btn').textContent = '⏸ Pause';
+    document.getElementById('pause-btn').onclick = function() {
+      if (autoPaused) {
+        autoPaused = false;
+        document.getElementById('pause-btn').textContent = '⏸ Pause';
+        document.getElementById('auto-status').textContent = 'Dealing…';
+        scheduleNextAutoCard();
+      } else {
+        autoPaused = true;
+        clearTimeout(autoTimer);
+        document.getElementById('pause-btn').textContent = '▶ Resume';
+        document.getElementById('auto-status').textContent = 'Paused';
+      }
+    };
+
+    showScreen('auto-game-screen');
+    scheduleNextAutoCard();
+  }
+
+  function scheduleNextAutoCard() {
+    if (autoPaused) return;
+    autoTimer = setTimeout(dealAutoCard, autoSpeedMs);
+  }
+
+  function dealAutoCard() {
+    if (autoPaused || autoDeck.length === 0 || autoDealt >= autoCardCount) {
+      finishAutoDealing();
+      return;
+    }
+    const card = autoDeck.pop();
+    autoRunningCount += hiLoValue(card.rank);
+    autoDealt++;
+
+    document.getElementById('auto-card-display').innerHTML = renderAutoCard(card);
+    document.getElementById('auto-hud-dealt').textContent = autoDealt;
+    document.getElementById('auto-progress-bar').style.width = (autoDealt / autoCardCount * 100) + '%';
+
+    if (autoDealt >= autoCardCount) {
+      finishAutoDealing();
+    } else {
+      scheduleNextAutoCard();
+    }
+  }
+
+  function finishAutoDealing() {
+    clearTimeout(autoTimer);
+    document.getElementById('auto-status').textContent = 'All cards dealt!';
+    document.getElementById('pause-btn').textContent = 'Submit Your Count →';
+    document.getElementById('pause-btn').onclick = openAutoQuiz;
+    document.getElementById('auto-progress-bar').style.width = '100%';
+  }
+
+  // Pause/Resume
+
+
+  document.getElementById('auto-quit-btn').addEventListener('click', () => {
+    clearTimeout(autoTimer);
+    showScreen('setup-screen');
+  });
+
+  // Auto quiz uses same modal but routes to auto results
+  let autoQuizMode = false;
+
+  function openAutoQuiz() {
+    autoQuizMode = true;
+    stepperVal = 0;
+    document.getElementById('stepper-display').textContent = '0';
+    document.getElementById('quiz-title').textContent = 'Final Count';
+    document.getElementById('quiz-sub').textContent = 'What is the running count?';
+    document.getElementById('quiz-input-section').style.display = '';
+    document.getElementById('quiz-result-section').style.display = 'none';
+    document.getElementById('quiz-modal').classList.add('open');
+  }
+
+  // Override submitCount to handle auto mode
+  function handleSubmit() {
+    const val = document.getElementById('stepper-display').textContent.trim();
+    if (val === '' || isNaN(val)) return;
+    const userAnswer = parseInt(val);
+
+    if (autoQuizMode) {
+      const isCorrect = userAnswer === autoRunningCount;
+      document.getElementById('quiz-modal').classList.remove('open');
+      setTimeout(() => showAutoResults(userAnswer, isCorrect), 300);
+    } else {
+      submitCount();
+    }
+  }
+
+  function showAutoResults(userAnswer, isCorrect) {
+    autoQuizMode = false;
+    const banner = document.getElementById('auto-res-banner');
+    banner.style.borderColor = isCorrect ? 'var(--correct)' : 'var(--wrong)';
+    banner.style.background = isCorrect ? 'rgba(46,204,113,0.12)' : 'rgba(231,76,60,0.12)';
+    document.getElementById('auto-res-icon').textContent = isCorrect ? '✓' : '✗';
+    document.getElementById('auto-res-icon').style.color = isCorrect ? 'var(--correct)' : 'var(--wrong)';
+    document.getElementById('auto-res-msg').textContent = isCorrect ? 'Correct!' : 'Not quite.';
+    const sign = n => (n > 0 ? '+' : '') + n;
+    document.getElementById('auto-res-user').textContent = sign(userAnswer);
+    document.getElementById('auto-res-user').style.color = isCorrect ? 'var(--correct)' : 'var(--wrong)';
+    document.getElementById('auto-res-correct').textContent = sign(autoRunningCount);
+    document.getElementById('auto-res-correct').style.color = 'var(--gold)';
+    showScreen('auto-results-screen');
+  }
+
+  document.getElementById('auto-play-again-btn').addEventListener('click', () => showScreen('setup-screen'));
+  // ══════════════════════════════════════
+
 </script>
 </body>
 </html>
