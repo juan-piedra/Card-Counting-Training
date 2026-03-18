@@ -864,6 +864,8 @@
     wrongCount = 0;
     gameActive = true;
     awaitingFirstCard = true;
+    quizPending = false;
+    quizPendingFinal = false;
 
     document.getElementById('hud-decks').textContent = numDecks;
     document.getElementById('next-btn').textContent = 'Deal Card';
@@ -882,8 +884,19 @@
   // ── NEXT CARD ──
   document.getElementById('next-btn').addEventListener('click', dealNextCard);
 
+  let quizPending = false;
+  let quizPendingFinal = false;
+
   function dealNextCard() {
-    if (!gameActive || deck.length === 0) return;
+    if (!gameActive) return;
+
+    // If quiz is pending, open it — don't deal a new card
+    if (quizPending) {
+      openQuiz(quizPendingFinal);
+      return;
+    }
+
+    if (deck.length === 0) return;
 
     const card = deck.pop();
     runningCount += hiLoValue(card.rank);
@@ -893,17 +906,20 @@
     updateHUD();
 
     if (deck.length === 0) {
-      // Last card — quiz then end
-      document.getElementById('next-btn').disabled = true;
-      document.getElementById('cards-until-label').textContent = 'Final count!';
-      setTimeout(() => openQuiz(true), 400);
+      // Last card dealt — next press opens final quiz
+      quizPending = true;
+      quizPendingFinal = true;
+      document.getElementById('next-btn').textContent = 'Final Count Check \u2192';
+      document.getElementById('cards-until-label').textContent = 'Last card dealt!';
       return;
     }
 
     if (cardsSinceQuiz >= nextQuizAt) {
-      document.getElementById('next-btn').disabled = true;
-      document.getElementById('cards-until-label').textContent = 'Time for a quiz!';
-      setTimeout(() => openQuiz(false), 400);
+      // Next press opens quiz — don't deal yet
+      quizPending = true;
+      quizPendingFinal = false;
+      document.getElementById('next-btn').textContent = 'Count Check \u2192';
+      document.getElementById('cards-until-label').textContent = 'Ready for a quiz?';
     } else {
       updateCardsUntilLabel();
     }
@@ -967,11 +983,33 @@
       return;
     }
 
-    // Reset for next interval
+    // Reset quiz state
+    quizPending = false;
+    quizPendingFinal = false;
     cardsSinceQuiz = 0;
     nextQuizAt = pickQuizInterval();
-    document.getElementById('next-btn').disabled = false;
-    updateCardsUntilLabel();
+
+    // Deal next card immediately
+    const card = deck.pop();
+    runningCount += hiLoValue(card.rank);
+    cardsSinceQuiz++;
+    document.getElementById('card-display').innerHTML = renderCard(card);
+    document.getElementById('next-btn').textContent = 'Deal Card';
+    updateHUD();
+
+    if (deck.length === 0) {
+      quizPending = true;
+      quizPendingFinal = true;
+      document.getElementById('next-btn').textContent = 'Final Count Check \u2192';
+      document.getElementById('cards-until-label').textContent = 'Last card dealt!';
+    } else if (cardsSinceQuiz >= nextQuizAt) {
+      quizPending = true;
+      quizPendingFinal = false;
+      document.getElementById('next-btn').textContent = 'Count Check \u2192';
+      document.getElementById('cards-until-label').textContent = 'Ready for a quiz?';
+    } else {
+      updateCardsUntilLabel();
+    }
   }
 
   // ── QUIT ──
