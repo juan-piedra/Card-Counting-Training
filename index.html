@@ -1080,6 +1080,16 @@
 
     <div class="auto-panel" id="sim-panel">
       <div class="gold-border" style="margin-bottom:0">
+        <div class="section-label">Number of Players</div>
+        <div class="deck-grid" style="grid-template-columns:repeat(5,1fr)">
+          <button class="deck-btn sim-player-btn" data-players="1">1</button>
+          <button class="deck-btn sim-player-btn" data-players="2">2</button>
+          <button class="deck-btn sim-player-btn selected" data-players="3">3</button>
+          <button class="deck-btn sim-player-btn" data-players="4">4</button>
+          <button class="deck-btn sim-player-btn" data-players="5">5</button>
+        </div>
+      </div>
+      <div class="gold-border" style="margin-bottom:0">
         <div class="section-label">Time to Count the Table</div>
         <div class="speed-grid">
           <button class="speed-btn sim-speed-btn" data-ms="7500"><span class="sp-name">Slow</span><span class="sp-val">7.5s</span></button>
@@ -1626,6 +1636,7 @@
   // ══════════════════════════════════════
   let simMode = false;
   let simTimeMs = 6500;
+  let simNumPlayers = 3;
   let simRound = 0;
   let simCorrect = 0;
   let simWrong = 0;
@@ -1663,6 +1674,15 @@
       document.querySelectorAll('.sim-speed-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       simTimeMs = parseInt(btn.dataset.ms);
+    });
+  });
+
+  // Sim player count selector
+  document.querySelectorAll('.sim-player-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sim-player-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      simNumPlayers = parseInt(btn.dataset.players);
     });
   });
 
@@ -1705,8 +1725,7 @@
     // Build and shuffle a fresh deck each round (use numDecks from practice setting, default 1)
     const roundDeck = shuffle(buildDeck(Math.max(1, numDecks)));
 
-    // Random 1-5 players
-    const numPlayers = Math.floor(Math.random() * 5) + 1;
+    const numPlayers = simNumPlayers;
     document.getElementById('sim-hud-players').textContent = numPlayers;
 
     // Deal: dealer gets 2 (1 face up, 1 face down), each player gets 2 face up
@@ -1725,29 +1744,11 @@
 
     // Render table
     const table = document.getElementById('sim-table');
-    // Determine layout: if 4-5 players, split into two rows
-    let playerRowsHTML = '';
-    if (numPlayers <= 3) {
-      playerRowsHTML = `<div class="sim-players-row">${playerHands.map((h,i) => `
+    const playerRowsHTML = `<div class="sim-players-row" style="flex-wrap:nowrap;justify-content:center;">${playerHands.map((h,i) => `
         <div class="sim-player-spot">
           <div class="sim-player-label">P${i+1}</div>
           <div class="sim-player-cards">${renderSimCard(h[0],false)}${renderSimCard(h[1],false)}</div>
         </div>`).join('')}</div>`;
-    } else {
-      const row1 = playerHands.slice(0, 3);
-      const row2 = playerHands.slice(3);
-      playerRowsHTML = `
-        <div class="sim-players-row">${row1.map((h,i) => `
-          <div class="sim-player-spot">
-            <div class="sim-player-label">P${i+1}</div>
-            <div class="sim-player-cards">${renderSimCard(h[0],false)}${renderSimCard(h[1],false)}</div>
-          </div>`).join('')}</div>
-        <div class="sim-players-row">${row2.map((h,i) => `
-          <div class="sim-player-spot">
-            <div class="sim-player-label">P${i+4}</div>
-            <div class="sim-player-cards">${renderSimCard(h[0],false)}${renderSimCard(h[1],false)}</div>
-          </div>`).join('')}</div>`;
-    }
 
     table.innerHTML = `
       <div class="sim-dealer-zone">
