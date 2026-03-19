@@ -910,13 +910,13 @@
 
   .sim-player-cards {
     display: flex;
-    gap: 4px;
+    gap: 3px;
   }
 
   /* Small card for sim mode */
   .sim-card {
-    width: 46px;
-    height: 67px;
+    width: var(--sc-w, 46px);
+    height: var(--sc-h, 67px);
     background: var(--card-bg);
     border-radius: 6px;
     border: 1px solid #ddd;
@@ -947,12 +947,12 @@
 
   .sim-rank {
     font-family: 'Playfair Display', serif;
-    font-size: 0.75rem;
+    font-size: var(--sc-rank, 0.75rem);
     font-weight: 900;
     line-height: 1;
   }
   .sim-suit {
-    font-size: 0.65rem;
+    font-size: var(--sc-suit, 0.65rem);
     line-height: 1;
   }
   .sim-card-center {
@@ -960,10 +960,14 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1.1rem;
+    font-size: var(--sc-center, 1.1rem);
     line-height: 1;
     user-select: none;
   }
+
+  /* Scale cards down for more players */
+  .sim-players-row[data-players="4"] { --sc-w:38px; --sc-h:55px; --sc-rank:0.65rem; --sc-suit:0.55rem; --sc-center:0.85rem; }
+  .sim-players-row[data-players="5"] { --sc-w:30px; --sc-h:44px; --sc-rank:0.55rem; --sc-suit:0.48rem; --sc-center:0.7rem; }
 
   .sim-divider {
     width: 80%;
@@ -1762,7 +1766,7 @@
 
     // Render table
     const table = document.getElementById('sim-table');
-    const playerRowsHTML = `<div class="sim-players-row" style="flex-wrap:nowrap;justify-content:center;">${playerHands.map((h,i) => `
+    const playerRowsHTML = `<div class="sim-players-row" data-players="${numPlayers}" style="flex-wrap:nowrap;justify-content:center;gap:${numPlayers>=4?'6px':'10px'}">${playerHands.map((h,i) => `
         <div class="sim-player-spot">
           <div class="sim-player-label">P${i+1}</div>
           <div class="sim-player-cards">${renderSimCard(h[0],false)}${renderSimCard(h[1],false)}</div>
