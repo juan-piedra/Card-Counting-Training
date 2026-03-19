@@ -117,6 +117,24 @@
     cursor: pointer;
     transition: all 0.15s;
   }
+  .sim-player-btn {
+    background: var(--felt);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 12px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .sim-player-btn.selected, .sim-player-btn:active {
+    background: var(--gold);
+    color: var(--felt-dark);
+    border-color: var(--gold);
+  }
+
   .deck-btn.selected, .deck-btn:active {
     background: var(--gold);
     color: var(--felt-dark);
@@ -1082,11 +1100,11 @@
       <div class="gold-border" style="margin-bottom:0">
         <div class="section-label">Number of Players</div>
         <div class="deck-grid" style="grid-template-columns:repeat(5,1fr)">
-          <button class="deck-btn sim-player-btn" data-players="1">1</button>
-          <button class="deck-btn sim-player-btn" data-players="2">2</button>
-          <button class="deck-btn sim-player-btn selected" data-players="3">3</button>
-          <button class="deck-btn sim-player-btn" data-players="4">4</button>
-          <button class="deck-btn sim-player-btn" data-players="5">5</button>
+          <button class="sim-player-btn" data-players="1">1</button>
+          <button class="sim-player-btn" data-players="2">2</button>
+          <button class="sim-player-btn selected" data-players="3">3</button>
+          <button class="sim-player-btn" data-players="4">4</button>
+          <button class="sim-player-btn" data-players="5">5</button>
         </div>
       </div>
       <div class="gold-border" style="margin-bottom:0">
