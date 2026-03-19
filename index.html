@@ -787,6 +787,197 @@
   /* ── AUTO RESULTS ── */
   #auto-results-screen { gap: 16px; }
 
+
+  /* ── SIMULATION TABLE ── */
+  #sim-game-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+    padding: 0;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+  #sim-game-screen.active { display: flex; }
+
+  .sim-hud {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px 8px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    flex-shrink: 0;
+  }
+
+  .sim-timer-bar-wrap {
+    width: 100%;
+    height: 5px;
+    background: rgba(201,168,76,0.1);
+    flex-shrink: 0;
+  }
+  .sim-timer-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    width: 100%;
+    transition: none;
+  }
+
+  .sim-table {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px 12px;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  .sim-zone-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  .sim-dealer-zone {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sim-dealer-cards {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sim-players-zone {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sim-players-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .sim-player-spot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .sim-player-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.4);
+  }
+
+  .sim-player-cards {
+    display: flex;
+    gap: 4px;
+  }
+
+  /* Small card for sim mode */
+  .sim-card {
+    width: 46px;
+    height: 67px;
+    background: var(--card-bg);
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3px 4px;
+    position: relative;
+  }
+  .sim-card.red { color: var(--red); }
+  .sim-card.black { color: var(--black); }
+  .sim-card.face-down {
+    background: #1a5c8a;
+    border: 1px solid #4a9cc7;
+  }
+  .sim-card.face-down::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 3px;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 3px,
+      rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px
+    );
+  }
+
+  .sim-rank {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .sim-suit {
+    font-size: 0.65rem;
+    line-height: 1;
+  }
+  .sim-card-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.1rem;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .sim-divider {
+    width: 80%;
+    height: 1px;
+    background: rgba(201,168,76,0.15);
+    flex-shrink: 0;
+  }
+
+  .sim-bottom {
+    width: 100%;
+    padding: 8px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    flex-shrink: 0;
+  }
+
+  .sim-time-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    height: 30px;
+    line-height: 1;
+  }
+  .sim-time-display.urgent { color: var(--wrong); }
+
+  /* sim results */
+  #sim-results-screen { gap: 16px; }
+
   /* Grade colors */
   .grade-s { color: #f0cc6e; }
   .grade-a { color: #2ecc71; }
@@ -806,6 +997,7 @@
     <div class="mode-tabs">
       <button class="mode-tab active" id="tab-practice">Practice</button>
       <button class="mode-tab" id="tab-auto">Auto Deal</button>
+      <button class="mode-tab" id="tab-sim">Simulation</button>
     </div>
 
     <div id="practice-panel" style="width:100%;display:flex;flex-direction:column;gap:0;">
@@ -885,6 +1077,19 @@
         <div class="toggle-desc" id="auto-hint-desc">Cards will <strong>not</strong> show the +1 / 0 / −1 badge</div>
       </div>
     </div><!-- /auto-panel -->
+
+    <div class="auto-panel" id="sim-panel">
+      <div class="gold-border" style="margin-bottom:0">
+        <div class="section-label">Time to Count the Table</div>
+        <div class="speed-grid">
+          <button class="speed-btn sim-speed-btn" data-ms="7500"><span class="sp-name">Slow</span><span class="sp-val">7.5s</span></button>
+          <button class="speed-btn sim-speed-btn selected" data-ms="6500"><span class="sp-name">Medium</span><span class="sp-val">6.5s</span></button>
+          <button class="speed-btn sim-speed-btn" data-ms="5000"><span class="sp-name">Fast</span><span class="sp-val">5.0s</span></button>
+          <button class="speed-btn sim-speed-btn" data-ms="4250"><span class="sp-name">Faster</span><span class="sp-val">4.25s</span></button>
+          <button class="speed-btn sim-speed-btn" data-ms="3750"><span class="sp-name">Fastest</span><span class="sp-val">3.75s</span></button>
+        </div>
+      </div>
+    </div><!-- /sim-panel -->
 
     <button class="start-btn" id="start-btn">Deal Me In</button>
   </div>
@@ -1009,6 +1214,68 @@
     <div class="stat-row" style="gap:12px">
       <button class="play-again-btn" id="auto-play-again-btn" style="flex:1">Play Again</button>
     </div>
+  </div>
+
+
+  <!-- ── SIMULATION GAME SCREEN ── -->
+  <div id="sim-game-screen" class="screen">
+    <div class="sim-hud">
+      <div class="hud-stat">
+        <div class="hud-val" id="sim-hud-round">1</div>
+        <div class="hud-lbl">Round</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-val" id="sim-hud-score">0 / 0</div>
+        <div class="hud-lbl">Score</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-val" id="sim-hud-players">—</div>
+        <div class="hud-lbl">Players</div>
+      </div>
+    </div>
+    <div class="sim-timer-bar-wrap">
+      <div class="sim-timer-bar-fill" id="sim-timer-bar"></div>
+    </div>
+
+    <div class="sim-table" id="sim-table">
+      <!-- populated by JS -->
+    </div>
+
+    <div class="sim-bottom">
+      <div class="sim-time-display" id="sim-time-display">—</div>
+      <button class="quit-btn" id="sim-quit-btn">Quit Session</button>
+    </div>
+  </div>
+
+  <!-- ── SIMULATION RESULTS SCREEN ── -->
+  <div id="sim-results-screen" class="screen">
+    <div class="results-header">
+      <div class="logo">Simulation</div>
+      <div class="tagline">Complete</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-stat" id="sim-res-accuracy">—%</div>
+      <div class="big-stat-lbl">Accuracy</div>
+    </div>
+    <div class="stat-row">
+      <div class="mini-stat">
+        <div class="mini-val" id="sim-res-correct">—</div>
+        <div class="mini-lbl">Correct</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-val" id="sim-res-wrong">—</div>
+        <div class="mini-lbl">Wrong</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-val" id="sim-res-rounds">—</div>
+        <div class="mini-lbl">Rounds</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="big-stat" id="sim-res-grade">—</div>
+      <div class="big-stat-lbl" id="sim-res-grade-lbl">Grade</div>
+    </div>
+    <button class="play-again-btn" id="sim-play-again-btn">Play Again</button>
   </div>
 
 </div><!-- /#app -->
@@ -1297,6 +1564,12 @@
     // Close modal first
     document.getElementById('quiz-modal').classList.remove('open');
 
+    // Sim mode — deal next round
+    if (simMode) {
+      setTimeout(dealSimRound, 350);
+      return;
+    }
+
     if (isFinalQuiz || deck.length === 0) {
       setTimeout(showResults, 300);
       return;
@@ -1347,6 +1620,237 @@
 
   // ── PLAY AGAIN ──
   document.getElementById('play-again-btn').addEventListener('click', () => showScreen('setup-screen'));
+
+  // ══════════════════════════════════════
+  //  SIMULATION MODE
+  // ══════════════════════════════════════
+  let simMode = false;
+  let simTimeMs = 6500;
+  let simRound = 0;
+  let simCorrect = 0;
+  let simWrong = 0;
+  let simTimer = null;
+  let simCurrentCount = 0;
+  let simTimerInterval = null;
+
+  // Tab wiring — extend existing tab handlers
+  document.getElementById('tab-sim').addEventListener('click', () => {
+    simMode = true; autoMode = false;
+    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-sim').classList.add('active');
+    document.getElementById('practice-panel').style.display = 'none';
+    document.getElementById('auto-panel').classList.remove('visible');
+    document.getElementById('sim-panel').classList.add('visible');
+    document.getElementById('start-btn').textContent = 'Start Simulation';
+  });
+
+  // Patch existing tab handlers to also hide sim-panel and unset simMode
+  const origPracticeTab = document.getElementById('tab-practice').onclick;
+  document.getElementById('tab-practice').addEventListener('click', () => {
+    simMode = false;
+    document.getElementById('sim-panel').classList.remove('visible');
+    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-practice').classList.add('active');
+  });
+  document.getElementById('tab-auto').addEventListener('click', () => {
+    simMode = false;
+    document.getElementById('sim-panel').classList.remove('visible');
+  });
+
+  // Sim speed selector
+  document.querySelectorAll('.sim-speed-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sim-speed-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      simTimeMs = parseInt(btn.dataset.ms);
+    });
+  });
+
+  // Patch start-btn
+  const existingStartListener = document.getElementById('start-btn').onclick;
+  document.getElementById('start-btn').addEventListener('click', () => {
+    if (simMode) startSimGame();
+  });
+
+  function renderSimCard(card, faceDown) {
+    if (faceDown) return '<div class="sim-card face-down"></div>';
+    const isRed = RED_SUITS.includes(card.suit);
+    const cls = isRed ? 'red' : 'black';
+    return `<div class="sim-card ${cls}">
+      <div>
+        <div class="sim-rank">${card.rank}</div>
+        <div class="sim-suit">${card.suit}</div>
+      </div>
+      <div class="sim-card-center">${card.suit}</div>
+      <div style="transform:rotate(180deg)">
+        <div class="sim-rank">${card.rank}</div>
+        <div class="sim-suit">${card.suit}</div>
+      </div>
+    </div>`;
+  }
+
+  function startSimGame() {
+    simRound = 0;
+    simCorrect = 0;
+    simWrong = 0;
+    document.getElementById('sim-hud-score').textContent = '0 / 0';
+    showScreen('sim-game-screen');
+    dealSimRound();
+  }
+
+  function dealSimRound() {
+    simRound++;
+    document.getElementById('sim-hud-round').textContent = simRound;
+
+    // Build and shuffle a fresh deck each round (use numDecks from practice setting, default 1)
+    const roundDeck = shuffle(buildDeck(Math.max(1, numDecks)));
+
+    // Random 1-5 players
+    const numPlayers = Math.floor(Math.random() * 5) + 1;
+    document.getElementById('sim-hud-players').textContent = numPlayers;
+
+    // Deal: dealer gets 2 (1 face up, 1 face down), each player gets 2 face up
+    const dealerUp = roundDeck.pop();
+    roundDeck.pop(); // dealer hole card — discard, doesn't count
+    const playerHands = [];
+    for (let p = 0; p < numPlayers; p++) {
+      playerHands.push([roundDeck.pop(), roundDeck.pop()]);
+    }
+
+    // Compute correct running count (only visible cards)
+    simCurrentCount = hiLoValue(dealerUp.rank);
+    for (const hand of playerHands) {
+      simCurrentCount += hiLoValue(hand[0].rank) + hiLoValue(hand[1].rank);
+    }
+
+    // Render table
+    const table = document.getElementById('sim-table');
+    // Determine layout: if 4-5 players, split into two rows
+    let playerRowsHTML = '';
+    if (numPlayers <= 3) {
+      playerRowsHTML = `<div class="sim-players-row">${playerHands.map((h,i) => `
+        <div class="sim-player-spot">
+          <div class="sim-player-label">P${i+1}</div>
+          <div class="sim-player-cards">${renderSimCard(h[0],false)}${renderSimCard(h[1],false)}</div>
+        </div>`).join('')}</div>`;
+    } else {
+      const row1 = playerHands.slice(0, 3);
+      const row2 = playerHands.slice(3);
+      playerRowsHTML = `
+        <div class="sim-players-row">${row1.map((h,i) => `
+          <div class="sim-player-spot">
+            <div class="sim-player-label">P${i+1}</div>
+            <div class="sim-player-cards">${renderSimCard(h[0],false)}${renderSimCard(h[1],false)}</div>
+          </div>`).join('')}</div>
+        <div class="sim-players-row">${row2.map((h,i) => `
+          <div class="sim-player-spot">
+            <div class="sim-player-label">P${i+4}</div>
+            <div class="sim-player-cards">${renderSimCard(h[0],false)}${renderSimCard(h[1],false)}</div>
+          </div>`).join('')}</div>`;
+    }
+
+    table.innerHTML = `
+      <div class="sim-dealer-zone">
+        <div class="sim-zone-label">Dealer</div>
+        <div class="sim-dealer-cards">
+          ${renderSimCard(dealerUp, false)}
+          ${renderSimCard(null, true)}
+        </div>
+      </div>
+      <div class="sim-divider"></div>
+      <div class="sim-players-zone">
+        <div class="sim-zone-label">Players</div>
+        ${playerRowsHTML}
+      </div>`;
+
+    // Start countdown
+    startSimCountdown();
+  }
+
+  function startSimCountdown() {
+    clearInterval(simTimerInterval);
+    clearTimeout(simTimer);
+
+    const bar = document.getElementById('sim-timer-bar');
+    const display = document.getElementById('sim-time-display');
+    bar.style.transition = 'none';
+    bar.style.width = '100%';
+    display.classList.remove('urgent');
+
+    const startTime = Date.now();
+    const endTime = startTime + simTimeMs;
+
+    // Animate bar
+    requestAnimationFrame(() => {
+      bar.style.transition = `width ${simTimeMs}ms linear`;
+      bar.style.width = '0%';
+    });
+
+    // Tick display
+    simTimerInterval = setInterval(() => {
+      const remaining = Math.max(0, endTime - Date.now());
+      const secs = (remaining / 1000).toFixed(1);
+      display.textContent = secs + 's';
+      if (remaining <= 1000) display.classList.add('urgent');
+      if (remaining <= 0) clearInterval(simTimerInterval);
+    }, 100);
+
+    // When time is up, open quiz
+    simTimer = setTimeout(() => {
+      clearInterval(simTimerInterval);
+      document.getElementById('sim-time-display').textContent = "Time's up!";
+      document.getElementById('sim-time-display').classList.add('urgent');
+      setTimeout(() => openSimQuiz(), 300);
+    }, simTimeMs);
+  }
+
+  function openSimQuiz() {
+    stepperVal = 0;
+    document.getElementById('stepper-display').textContent = '0';
+    document.getElementById('quiz-title').textContent = 'Table Count';
+    document.getElementById('quiz-sub').textContent = 'What is the running count?';
+    document.getElementById('quiz-input-section').style.display = '';
+    document.getElementById('quiz-result-section').style.display = 'none';
+    // Flag so handleSubmit knows where to route
+    autoQuizMode = false;
+    simQuizMode = true;
+    document.getElementById('quiz-modal').classList.add('open');
+  }
+
+  let simQuizMode = false;
+
+  // Patch handleSubmit to handle sim mode — redefine it
+  // (function is already declared, we need to update the logic)
+
+  document.getElementById('sim-quit-btn').addEventListener('click', () => {
+    clearTimeout(simTimer);
+    clearInterval(simTimerInterval);
+    if (simRound > 0) showSimResults();
+    else showScreen('setup-screen');
+  });
+
+  document.getElementById('sim-play-again-btn').addEventListener('click', () => showScreen('setup-screen'));
+
+  function showSimResults() {
+    const total = simCorrect + simWrong;
+    const accuracy = total === 0 ? 0 : Math.round(simCorrect / total * 100);
+    document.getElementById('sim-res-accuracy').textContent = accuracy + '%';
+    document.getElementById('sim-res-correct').textContent = simCorrect;
+    document.getElementById('sim-res-wrong').textContent = simWrong;
+    document.getElementById('sim-res-rounds').textContent = total;
+    let grade, cls, lbl;
+    if (accuracy >= 95)      { grade='S'; cls='grade-s'; lbl='Casino Ready'; }
+    else if (accuracy >= 85) { grade='A'; cls='grade-a'; lbl='Sharp Counter'; }
+    else if (accuracy >= 70) { grade='B'; cls='grade-b'; lbl='Getting There'; }
+    else if (accuracy >= 50) { grade='C'; cls='grade-c'; lbl='Keep Practicing'; }
+    else                     { grade='D'; cls='grade-d'; lbl='Hit the Tables… Later'; }
+    const g = document.getElementById('sim-res-grade');
+    g.textContent = grade; g.className = 'big-stat ' + cls;
+    document.getElementById('sim-res-grade-lbl').textContent = lbl;
+    showScreen('sim-results-screen');
+  }
+  // ══════════════════════════════════════
+
 
   // ══════════════════════════════════════
   //  AUTO DEAL MODE
@@ -1531,6 +2035,22 @@
       const isCorrect = userAnswer === autoRunningCount;
       document.getElementById('quiz-modal').classList.remove('open');
       setTimeout(() => showAutoResults(userAnswer, isCorrect), 300);
+    } else if (simQuizMode) {
+      simQuizMode = false;
+      const isCorrect = userAnswer === simCurrentCount;
+      if (isCorrect) simCorrect++; else simWrong++;
+      document.getElementById('sim-hud-score').textContent = simCorrect + ' / ' + (simCorrect + simWrong);
+      // Show result in modal
+      document.getElementById('quiz-input-section').style.display = 'none';
+      document.getElementById('quiz-result-section').style.display = '';
+      const sign = n => (n > 0 ? '+' : '') + n;
+      document.getElementById('result-banner').className = 'result-banner ' + (isCorrect ? 'correct' : 'wrong');
+      document.getElementById('result-icon').textContent = isCorrect ? '✓' : '✗';
+      document.getElementById('result-msg').className = 'result-msg ' + (isCorrect ? 'correct' : 'wrong');
+      document.getElementById('result-msg').textContent = isCorrect ? 'Correct!' : 'Not quite.';
+      document.getElementById('result-detail').textContent = isCorrect
+        ? 'The count was ' + sign(simCurrentCount)
+        : 'The count was ' + sign(simCurrentCount) + ' — you said ' + sign(userAnswer);
     } else {
       submitCount();
     }
