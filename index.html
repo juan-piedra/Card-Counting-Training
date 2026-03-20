@@ -649,6 +649,7 @@
   /* ── MODE TABS ── */
   .mode-tabs {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     border: 1px solid var(--gold-dim);
     border-radius: var(--radius);
@@ -656,8 +657,9 @@
     margin-bottom: 20px;
   }
   .mode-tab {
-    flex: 1;
-    padding: 13px 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 11px 4px;
     background: transparent;
     border: none;
     color: var(--gold-dim);
@@ -1000,6 +1002,242 @@
   /* sim results */
   #sim-results-screen { gap: 16px; }
 
+
+  /* ── STRATEGY CHART SCREEN ── */
+  #chart-screen {
+    padding: 0;
+    height: 100%;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+  .chart-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    flex-shrink: 0;
+  }
+  .chart-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .chart-back-btn {
+    background: none;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-dim);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+  .chart-tabs {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    flex-shrink: 0;
+  }
+  .chart-tab {
+    flex: 1;
+    padding: 9px 4px;
+    background: none;
+    border: none;
+    color: var(--gold-dim);
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .chart-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .chart-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 12px 10px 20px;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+  .chart-table {
+    border-collapse: collapse;
+    font-size: 0.62rem;
+    width: 100%;
+    min-width: 310px;
+  }
+  .chart-table th {
+    background: rgba(201,168,76,0.12);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    padding: 5px 3px;
+    text-align: center;
+    border: 1px solid rgba(201,168,76,0.15);
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+  .chart-table td {
+    padding: 4px 2px;
+    text-align: center;
+    border: 1px solid rgba(201,168,76,0.1);
+    font-family: 'Courier Prime', monospace;
+    font-weight: 700;
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+  .chart-table .row-label {
+    background: rgba(201,168,76,0.08);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.68rem;
+    text-align: left;
+    padding-left: 5px;
+  }
+  /* Action colors */
+  .ca-S  { background: rgba(46,204,113,0.18);  color: #2ecc71; }  /* Stand */
+  .ca-H  { background: rgba(52,152,219,0.18);  color: #5dade2; }  /* Hit */
+  .ca-D  { background: rgba(241,196,15,0.22);  color: #f1c40f; }  /* Double */
+  .ca-P  { background: rgba(155,89,182,0.22);  color: #bb8fce; }  /* Split */
+  .ca-Ds { background: rgba(230,126,34,0.22);  color: #e59866; }  /* Double if allowed, else Stand */
+  .ca-Dh { background: rgba(230,126,34,0.22);  color: #e59866; }  /* Double if allowed, else Hit */
+  .ca-Ph { background: rgba(155,89,182,0.22);  color: #bb8fce; }  /* Split if DAS, else Hit */
+  .ca-Rh { background: rgba(231,76,60,0.18);   color: #e74c3c; }  /* Surrender if allowed, else Hit */
+  .ca-Rs { background: rgba(231,76,60,0.18);   color: #e74c3c; }  /* Surrender if allowed, else Stand */
+  .chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding: 10px 10px 4px;
+    flex-shrink: 0;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Courier Prime', monospace;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── STRATEGY QUIZ SCREEN ── */
+  #strategy-screen {
+    padding: 0;
+    height: 100%;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  .strategy-hud {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px 10px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    flex-shrink: 0;
+  }
+  .strategy-stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 12px 16px;
+  }
+  .strategy-dealer-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .strategy-player-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .strategy-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+  .strategy-cards {
+    display: flex;
+    gap: 8px;
+  }
+  .strategy-vs {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.15em;
+  }
+  .strategy-hand-desc {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    text-align: center;
+  }
+  .strategy-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .action-btn {
+    flex: 1;
+    min-width: 70px;
+    max-width: 100px;
+    padding: 14px 6px;
+    border-radius: 12px;
+    border: 1px solid var(--gold-dim);
+    background: rgba(0,0,0,0.25);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.12s;
+    text-align: center;
+  }
+  .action-btn:active { transform: scale(0.95); }
+  .action-btn.correct-flash { background: rgba(46,204,113,0.25); border-color: var(--correct); color: var(--correct); }
+  .action-btn.wrong-flash   { background: rgba(231,76,60,0.25);  border-color: var(--wrong);   color: var(--wrong); }
+  .action-btn.reveal-flash  { background: rgba(46,204,113,0.15); border-color: var(--correct); color: var(--correct); }
+
+  .strategy-feedback {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    height: 24px;
+    transition: opacity 0.3s;
+  }
+  .strategy-feedback.correct { color: var(--correct); }
+  .strategy-feedback.wrong   { color: var(--wrong); }
+
+  .strategy-bottom {
+    width: 100%;
+    padding: 10px 20px 20px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
   /* Grade colors */
   .grade-s { color: #f0cc6e; }
   .grade-a { color: #2ecc71; }
@@ -1020,6 +1258,8 @@
       <button class="mode-tab active" id="tab-practice">Practice</button>
       <button class="mode-tab" id="tab-auto">Auto Deal</button>
       <button class="mode-tab" id="tab-sim">Simulation</button>
+      <button class="mode-tab" id="tab-chart">Chart</button>
+      <button class="mode-tab" id="tab-strategy">Strategy</button>
     </div>
 
     <div id="practice-panel" style="width:100%;display:flex;flex-direction:column;gap:0;">
@@ -1122,6 +1362,16 @@
         </div>
       </div>
     </div><!-- /sim-panel -->
+
+    <div class="auto-panel" id="chart-panel" style="align-items:center;gap:12px;">
+      <p style="color:rgba(255,255,255,0.5);font-size:0.85rem;text-align:center;line-height:1.6;">Study the complete basic strategy chart for multi-deck blackjack.</p>
+      <button class="start-btn" id="chart-go-btn" style="width:100%">Open Chart</button>
+    </div>
+
+    <div class="auto-panel" id="strategy-panel" style="align-items:center;gap:12px;">
+      <p style="color:rgba(255,255,255,0.5);font-size:0.85rem;text-align:center;line-height:1.6;">Practice making the correct play for every hand against every dealer upcard.</p>
+      <button class="start-btn" id="strategy-go-btn" style="width:100%">Start Quiz</button>
+    </div>
 
     <button class="start-btn" id="start-btn">Deal Me In</button>
   </div>
@@ -1308,6 +1558,72 @@
       <div class="big-stat-lbl" id="sim-res-grade-lbl">Grade</div>
     </div>
     <button class="play-again-btn" id="sim-play-again-btn">Play Again</button>
+  </div>
+
+
+  <!-- ── BASIC STRATEGY CHART SCREEN ── -->
+  <div id="chart-screen" class="screen">
+    <div class="chart-header">
+      <div class="chart-title">Basic Strategy Chart</div>
+      <button class="chart-back-btn" id="chart-back-btn">← Back</button>
+    </div>
+    <div class="chart-tabs">
+      <button class="chart-tab active" id="ctab-hard" onclick="showChartTab('hard')">Hard Totals</button>
+      <button class="chart-tab" id="ctab-soft" onclick="showChartTab('soft')">Soft Totals</button>
+      <button class="chart-tab" id="ctab-pairs" onclick="showChartTab('pairs')">Pairs</button>
+    </div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#2ecc71"></div>S = Stand</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#5dade2"></div>H = Hit</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f1c40f"></div>D = Double</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#bb8fce"></div>P = Split</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e59866"></div>D/S or D/H = Double else Stand/Hit</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div>R = Surrender</div>
+    </div>
+    <div class="chart-scroll" id="chart-scroll">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- ── STRATEGY QUIZ SCREEN ── -->
+  <div id="strategy-screen" class="screen">
+    <div class="strategy-hud">
+      <div class="hud-stat">
+        <div class="hud-val" id="strat-hud-correct">0</div>
+        <div class="hud-lbl">Correct</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-val" id="strat-hud-streak">0</div>
+        <div class="hud-lbl">Streak</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-val" id="strat-hud-total">0</div>
+        <div class="hud-lbl">Total</div>
+      </div>
+    </div>
+    <div class="strategy-stage">
+      <div class="strategy-dealer-row">
+        <div class="strategy-label">Dealer Shows</div>
+        <div class="strategy-cards" id="strat-dealer-cards"></div>
+      </div>
+      <div class="strategy-vs">vs</div>
+      <div class="strategy-player-row">
+        <div class="strategy-label">Your Hand</div>
+        <div class="strategy-cards" id="strat-player-cards"></div>
+        <div class="strategy-hand-desc" id="strat-hand-desc"></div>
+      </div>
+      <div class="strategy-feedback" id="strat-feedback"></div>
+      <div class="strategy-actions" id="strat-actions">
+        <button class="action-btn" id="btn-hit"       onclick="stratAnswer('H')">Hit</button>
+        <button class="action-btn" id="btn-stand"     onclick="stratAnswer('S')">Stand</button>
+        <button class="action-btn" id="btn-double"    onclick="stratAnswer('D')">Double</button>
+        <button class="action-btn" id="btn-split"     onclick="stratAnswer('P')">Split</button>
+        <button class="action-btn" id="btn-surrender" onclick="stratAnswer('R')">Surrender</button>
+      </div>
+    </div>
+    <div class="strategy-bottom">
+      <button class="quit-btn" id="strategy-quit-btn">← Back to Menu</button>
+    </div>
   </div>
 
 </div><!-- /#app -->
@@ -2097,6 +2413,315 @@
 
   document.getElementById('auto-play-again-btn').addEventListener('click', () => showScreen('setup-screen'));
   // ══════════════════════════════════════
+
+  // ══════════════════════════════════════════════
+  //  BASIC STRATEGY DATA (multi-deck, S17)
+  //  Dealer upcards: 2,3,4,5,6,7,8,9,10,A
+  // ══════════════════════════════════════════════
+
+  const DEALER_UPCARDS = ['2','3','4','5','6','7','8','9','10','A'];
+
+  // Hard totals: rows = player total 5–17+, cols = dealer upcard 2–A
+  // Actions: H=Hit, S=Stand, D=Double(else Hit), Ds=Double(else Stand), Rh=Surrender(else Hit), Rs=Surrender(else Stand)
+  const HARD_ROWS = [5,6,7,8,9,10,11,12,13,14,15,16,17];
+  const HARD_TABLE = {
+  //               2    3    4    5    6    7    8    9   10    A
+    5:           ['H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'],
+    6:           ['H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'],
+    7:           ['H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'],
+    8:           ['H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'],
+    9:           ['H', 'D', 'D', 'D', 'D', 'H', 'H', 'H', 'H', 'H'],
+    10:          ['D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'H', 'H'],
+    11:          ['D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'H'],
+    12:          ['H', 'H', 'S', 'S', 'S', 'H', 'H', 'H', 'H', 'H'],
+    13:          ['S', 'S', 'S', 'S', 'S', 'H', 'H', 'H', 'H', 'H'],
+    14:          ['S', 'S', 'S', 'S', 'S', 'H', 'H', 'H', 'H', 'H'],
+    15:          ['S', 'S', 'S', 'S', 'S', 'H', 'H', 'H', 'Rh','H'],
+    16:          ['S', 'S', 'S', 'S', 'S', 'H', 'H', 'Rh','Rh','Rh'],
+    17:          ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'Rs'],
+  };
+
+  // Soft totals: rows = A+X where X is 2–9 (soft 13 – soft 20)
+  const SOFT_ROWS = ['A+2','A+3','A+4','A+5','A+6','A+7','A+8','A+9'];
+  const SOFT_LABELS = {'A+2':'Soft 13','A+3':'Soft 14','A+4':'Soft 15','A+5':'Soft 16','A+6':'Soft 17','A+7':'Soft 18','A+8':'Soft 19','A+9':'Soft 20'};
+  const SOFT_TABLE = {
+  //               2    3    4    5    6    7    8    9   10    A
+    'A+2':       ['H', 'H', 'H', 'D', 'D', 'H', 'H', 'H', 'H', 'H'],
+    'A+3':       ['H', 'H', 'H', 'D', 'D', 'H', 'H', 'H', 'H', 'H'],
+    'A+4':       ['H', 'H', 'D', 'D', 'D', 'H', 'H', 'H', 'H', 'H'],
+    'A+5':       ['H', 'H', 'D', 'D', 'D', 'H', 'H', 'H', 'H', 'H'],
+    'A+6':       ['H', 'D', 'D', 'D', 'D', 'H', 'H', 'H', 'H', 'H'],
+    'A+7':       ['Ds','Ds','Ds','Ds','Ds','S', 'S', 'H', 'H', 'H'],
+    'A+8':       ['S', 'S', 'S', 'S', 'Ds','S', 'S', 'S', 'S', 'S'],
+    'A+9':       ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'],
+  };
+
+  // Pairs: rows = pair value
+  const PAIR_ROWS = ['A','10','9','8','7','6','5','4','3','2'];
+  const PAIR_LABELS = {'A':'A-A','10':'10-10','9':'9-9','8':'8-8','7':'7-7','6':'6-6','5':'5-5','4':'4-4','3':'3-3','2':'2-2'};
+  const PAIR_TABLE = {
+  //               2    3    4    5    6    7    8    9   10    A
+    'A':         ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+    '10':        ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'],
+    '9':         ['P', 'P', 'P', 'P', 'P', 'S', 'P', 'P', 'S', 'S'],
+    '8':         ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+    '7':         ['P', 'P', 'P', 'P', 'P', 'P', 'H', 'H', 'H', 'H'],
+    '6':         ['Ph','P', 'P', 'P', 'P', 'H', 'H', 'H', 'H', 'H'],
+    '5':         ['D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'H', 'H'],
+    '4':         ['H', 'H', 'H', 'Ph','Ph','H', 'H', 'H', 'H', 'H'],
+    '3':         ['Ph','Ph','P', 'P', 'P', 'P', 'H', 'H', 'H', 'H'],
+    '2':         ['Ph','Ph','P', 'P', 'P', 'P', 'H', 'H', 'H', 'H'],
+  };
+
+  function actionClass(a) {
+    const map = {H:'ca-H',S:'ca-S',D:'ca-D',Ds:'ca-Ds',Dh:'ca-Dh',P:'ca-P',Ph:'ca-Ph',Rh:'ca-Rh',Rs:'ca-Rs'};
+    return map[a] || '';
+  }
+  function actionLabel(a) {
+    const map = {H:'H',S:'S',D:'D',Ds:'D/S',Dh:'D/H',P:'P',Ph:'P/H',Rh:'R/H',Rs:'R/S'};
+    return map[a] || a;
+  }
+
+  function buildChartTable(rows, table, rowLabels) {
+    let html = '<table class="chart-table"><thead><tr><th>Hand</th>';
+    DEALER_UPCARDS.forEach(u => { html += `<th>${u}</th>`; });
+    html += '</tr></thead><tbody>';
+    rows.forEach(row => {
+      const label = rowLabels ? rowLabels[row] : row;
+      html += `<tr><td class="row-label">${label}</td>`;
+      DEALER_UPCARDS.forEach((u, i) => {
+        const a = table[row][i];
+        html += `<td class="${actionClass(a)}">${actionLabel(a)}</td>`;
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    return html;
+  }
+
+  let currentChartTab = 'hard';
+  function showChartTab(tab) {
+    currentChartTab = tab;
+    ['hard','soft','pairs'].forEach(t => {
+      document.getElementById('ctab-' + t).classList.toggle('active', t === tab);
+    });
+    const scroll = document.getElementById('chart-scroll');
+    if (tab === 'hard')  scroll.innerHTML = buildChartTable(HARD_ROWS, HARD_TABLE, null);
+    if (tab === 'soft')  scroll.innerHTML = buildChartTable(SOFT_ROWS, SOFT_TABLE, SOFT_LABELS);
+    if (tab === 'pairs') scroll.innerHTML = buildChartTable(PAIR_ROWS, PAIR_TABLE, PAIR_LABELS);
+  }
+
+  // ── CHART TAB WIRING ──
+  document.getElementById('tab-chart').addEventListener('click', () => {
+    setActiveMode('chart');
+    document.getElementById('chart-panel').classList.add('visible');
+    document.getElementById('start-btn').style.display = 'none';
+  });
+  document.getElementById('chart-go-btn').addEventListener('click', () => {
+    showScreen('chart-screen');
+    showChartTab('hard');
+  });
+  document.getElementById('chart-back-btn').addEventListener('click', () => showScreen('setup-screen'));
+
+  // ── STRATEGY QUIZ TAB WIRING ──
+  document.getElementById('tab-strategy').addEventListener('click', () => {
+    setActiveMode('strategy');
+    document.getElementById('strategy-panel').classList.add('visible');
+    document.getElementById('start-btn').style.display = 'none';
+  });
+  document.getElementById('strategy-go-btn').addEventListener('click', () => {
+    startStrategyQuiz();
+  });
+  document.getElementById('strategy-quit-btn').addEventListener('click', () => showScreen('setup-screen'));
+
+  // Helper to switch modes cleanly
+  function setActiveMode(mode) {
+    ['practice','auto','sim','chart','strategy'].forEach(m => {
+      const tab = document.getElementById('tab-' + m);
+      if (tab) tab.classList.remove('active');
+      const panel = document.getElementById(m + '-panel');
+      if (panel) panel.classList.remove('visible');
+    });
+    document.getElementById('tab-' + mode).classList.add('active');
+    // Hide/show start-btn based on whether it's needed
+    const startBtn = document.getElementById('start-btn');
+    if (mode === 'practice' || mode === 'auto' || mode === 'sim') {
+      startBtn.style.display = '';
+      document.getElementById('practice-panel').style.display = mode === 'practice' ? 'flex' : 'none';
+      if (mode === 'practice') document.getElementById('practice-panel').style.flexDirection = 'column';
+      if (mode === 'auto') document.getElementById('auto-panel').classList.add('visible');
+      if (mode === 'sim') document.getElementById('sim-panel').classList.add('visible');
+    } else {
+      startBtn.style.display = 'none';
+      document.getElementById('practice-panel').style.display = 'none';
+    }
+  }
+
+  // Patch existing tab listeners to use setActiveMode
+  // (They already exist and still handle autoMode/simMode flags — we just also call this)
+
+  // ══════════════════════════════════════════════
+  //  STRATEGY QUIZ LOGIC
+  // ══════════════════════════════════════════════
+  let stratCorrect = 0, stratTotal = 0, stratStreak = 0;
+  let stratCurrentAnswer = null;
+  let stratAnswered = false;
+
+  const RANKS_DECK = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+  const FACE_RANKS = ['10','J','Q','K'];
+
+  function cardValue(rank) {
+    if (FACE_RANKS.includes(rank)) return 10;
+    if (rank === 'A') return 11;
+    return parseInt(rank);
+  }
+
+  function renderStratCard(rank) {
+    const suit = SUITS[Math.floor(Math.random() * 4)];
+    const isRed = RED_SUITS.includes(suit);
+    const colorClass = isRed ? 'red' : 'black';
+    const displayRank = rank;
+    return `<div class="playing-card ${colorClass}" style="width:var(--card-w);height:var(--card-h);transform:scale(0.55);transform-origin:top left;margin-right:calc(var(--card-w)*-0.45);flex-shrink:0;">
+      <div class="card-corner top"><span class="corner-rank">${displayRank}</span><span class="corner-suit">${suit}</span></div>
+      <div class="card-center">${suit}</div>
+      <div class="card-corner bottom"><span class="corner-rank">${displayRank}</span><span class="corner-suit">${suit}</span></div>
+    </div>`;
+  }
+
+  function generateStratHand() {
+    const dealerRanks = ['2','3','4','5','6','7','8','9','10','A'];
+    const dealerUpcard = dealerRanks[Math.floor(Math.random() * dealerRanks.length)];
+    const dealerIdx = DEALER_UPCARDS.indexOf(dealerUpcard);
+
+    // Pick hand type: 0=hard, 1=soft, 2=pair
+    const handType = Math.floor(Math.random() * 3);
+    let playerCards, handDesc, correctAction, showSplit;
+
+    if (handType === 2) {
+      // Pair
+      const pairRank = PAIR_ROWS[Math.floor(Math.random() * PAIR_ROWS.length)];
+      const displayRank = pairRank === '10' ? '10' : pairRank;
+      playerCards = [displayRank, displayRank];
+      handDesc = PAIR_LABELS[pairRank];
+      correctAction = PAIR_TABLE[pairRank][dealerIdx];
+      showSplit = true;
+    } else if (handType === 1) {
+      // Soft
+      const softKey = SOFT_ROWS[Math.floor(Math.random() * SOFT_ROWS.length)];
+      const num = parseInt(softKey.split('+')[1]);
+      playerCards = ['A', String(num)];
+      handDesc = SOFT_LABELS[softKey];
+      correctAction = SOFT_TABLE[softKey][dealerIdx];
+      showSplit = false;
+    } else {
+      // Hard
+      const hardTotal = HARD_ROWS[Math.floor(Math.random() * HARD_ROWS.length)];
+      // Generate two cards summing to hardTotal (no pair, no ace)
+      let c1, c2;
+      do {
+        c1 = Math.min(10, Math.floor(Math.random() * 9) + 2);
+        c2 = hardTotal - c1;
+      } while (c2 < 2 || c2 > 10 || c1 === c2);
+      playerCards = [String(c1), c2 === 10 ? '10' : String(c2)];
+      handDesc = 'Hard ' + hardTotal;
+      correctAction = HARD_TABLE[hardTotal][dealerIdx];
+      showSplit = false;
+    }
+
+    return { dealerUpcard, playerCards, handDesc, correctAction, showSplit, dealerIdx };
+  }
+
+  function startStrategyQuiz() {
+    stratCorrect = 0; stratTotal = 0; stratStreak = 0;
+    updateStratHud();
+    showScreen('strategy-screen');
+    dealStratHand();
+  }
+
+  function dealStratHand() {
+    stratAnswered = false;
+    const hand = generateStratHand();
+    stratCurrentAnswer = hand.correctAction;
+
+    // Render dealer card
+    document.getElementById('strat-dealer-cards').innerHTML = renderStratCard(hand.dealerUpcard);
+
+    // Render player cards
+    document.getElementById('strat-player-cards').innerHTML =
+      hand.playerCards.map(r => renderStratCard(r)).join('');
+
+    document.getElementById('strat-hand-desc').textContent = hand.handDesc;
+    document.getElementById('strat-feedback').textContent = '';
+    document.getElementById('strat-feedback').className = 'strategy-feedback';
+
+    // Show/hide split button
+    document.getElementById('btn-split').style.display = hand.showSplit ? '' : 'none';
+
+    // Reset button styles
+    ['btn-hit','btn-stand','btn-double','btn-split','btn-surrender'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.className = 'action-btn'; el.disabled = false; }
+    });
+  }
+
+  function stratAnswer(action) {
+    if (stratAnswered) return;
+    stratAnswered = true;
+    stratTotal++;
+
+    // Normalize: D/Ds/Dh all count as D; Ph counts as P; Rh/Rs count as R
+    const correct = stratCurrentAnswer;
+    const normalize = a => {
+      if (a === 'Ds' || a === 'Dh') return 'D';
+      if (a === 'Ph') return 'P';
+      if (a === 'Rh' || a === 'Rs') return 'R';
+      return a;
+    };
+    const normCorrect = normalize(correct);
+    const isCorrect = action === normCorrect;
+
+    if (isCorrect) {
+      stratCorrect++; stratStreak++;
+    } else {
+      stratStreak = 0;
+    }
+    updateStratHud();
+
+    // Flash buttons
+    const btnMap = {H:'btn-hit',S:'btn-stand',D:'btn-double',P:'btn-split',R:'btn-surrender'};
+    const clickedBtn = document.getElementById(btnMap[action]);
+    const correctBtn = document.getElementById(btnMap[normCorrect]);
+
+    if (isCorrect) {
+      clickedBtn.classList.add('correct-flash');
+    } else {
+      clickedBtn.classList.add('wrong-flash');
+      if (correctBtn) correctBtn.classList.add('reveal-flash');
+    }
+
+    // Feedback text
+    const fb = document.getElementById('strat-feedback');
+    const actionNames = {H:'Hit',S:'Stand',D:'Double',P:'Split',R:'Surrender'};
+    fb.className = 'strategy-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    fb.textContent = isCorrect
+      ? '✓ Correct!'
+      : `✗ Should ${actionNames[normCorrect]}`;
+
+    // Disable buttons briefly then deal next hand
+    ['btn-hit','btn-stand','btn-double','btn-split','btn-surrender'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.disabled = true;
+    });
+    setTimeout(dealStratHand, 900);
+  }
+
+  function updateStratHud() {
+    document.getElementById('strat-hud-correct').textContent = stratCorrect;
+    document.getElementById('strat-hud-streak').textContent = stratStreak;
+    document.getElementById('strat-hud-total').textContent = stratTotal;
+  }
+  // ══════════════════════════════════════════════
+
 
 </script>
 </body>
